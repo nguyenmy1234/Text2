@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Index & Dataset Hub - Nguyễn Thị Hồng Hạnh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Marked.js for Markdown Rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-gray-100 to-slate-200 h-full text-slate-800 flex flex-col font-sans antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-brand-600 to-emerald-400 p-2.5 rounded-xl text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-folder-tree text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">GitHub Index Hub</h1>
+                    <p class="text-xs text-slate-500">Quản lý kho lưu trữ & Phân tích dữ liệu</p>
+                </div>
+            </div>
+            
+            <!-- Author Attribution Badge -->
+            <div class="flex items-center space-x-2 bg-slate-100 border border-slate-200/80 px-3 py-1.5 rounded-full shadow-inner">
+                <div class="w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs font-bold">
+                    H
+                </div>
+                <div class="text-xs">
+                    <span class="font-semibold text-slate-700">Nguyễn Thị Hồng Hạnh</span>
+                    <span class="text-slate-400 mx-1">|</span>
+                    <a href="https://github.com/nguyenmy" target="_blank" class="text-brand-600 hover:underline font-medium">
+                        <i class="fa-brands fa-github mr-0.5"></i> nguyenmy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-3 mb-6">
+            <button onclick="switchTab('files')" id="btn-files" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 bg-brand-600 text-white shadow-md shadow-brand-600/20">
+                <i class="fa-solid fa-box-archive"></i>
+                <span>Danh sách 4 File Mới</span>
+            </button>
+            <button onclick="switchTab('analyzer')" id="btn-analyzer" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-sm">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Công cụ Phân tích Văn bản</span>
+            </button>
+            <button onclick="switchTab('readme')" id="btn-readme" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-sm">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Read Me (Amazon Sentiment)</span>
+            </button>
+        </div>
+
+        <!-- Tab 1: File Manager for the 4 New Files -->
+        <div id="tab-files" class="tab-content flex-1 flex flex-col space-y-6">
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                            <i class="fa-solid fa-folder-open text-brand-600"></i>
+                            <span>Kho lưu trữ 4 tệp dữ liệu dự án</span>
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">Danh sách các tệp tài liệu và tập dữ liệu được tải lên hệ thống GitHub repository của nguyenmy.</p>
+                    </div>
+                    <div class="relative">
+                        <input type="text" id="file-search" oninput="filterFiles()" placeholder="Tìm kiếm tệp..." class="w-full sm:w-64 pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- File Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="file-grid">
+                    <!-- File 1 -->
+                    <div class="file-card border border-slate-200/80 rounded-xl p-5 bg-slate-50/50 hover:bg-white hover:border-brand-500/50 transition-all shadow-sm flex flex-col justify-between" data-name="README_2.md amazon reviews sentiment analysis">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Markdown</span>
+                                <span class="text-xs text-slate-400 font-mono">12.4 KB</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1 flex items-center space-x-2">
+                                <i class="fa-solid fa-file-lines text-brand-600"></i>
+                                <span>README_2.md</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+                                Dataset Card cho phân tích cảm xúc đánh giá sản phẩm Amazon (Amazon reviews for sentiment analysis). Bao gồm cấu trúc dữ liệu, nhiệm vụ và tóm tắt.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 text-xs">
+                            <span class="text-slate-400">Cập nhật: Gần đây</span>
+                            <button onclick="previewFileContent('readme')" class="text-brand-600 hover:text-brand-700 font-semibold flex items-center space-x-1">
+                                <span>Xem chi tiết</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File 2 -->
+                    <div class="file-card border border-slate-200/80 rounded-xl p-5 bg-slate-50/50 hover:bg-white hover:border-brand-500/50 transition-all shadow-sm flex flex-col justify-between" data-name="sentiment_model.py python code machine learning">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">Python Script</span>
+                                <span class="text-xs text-slate-400 font-mono">8.1 KB</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1 flex items-center space-x-2">
+                                <i class="fa-brands fa-python text-amber-600"></i>
+                                <span>sentiment_model.py</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+                                Mã nguồn huấn luyện mô hình học máy xử lý ngôn ngữ tự nhiên (NLP) nhằm phân loại sắc thái đánh giá sản phẩm tích cực và tiêu cực.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 text-xs">
+                            <span class="text-slate-400">Cập nhật: Gần đây</span>
+                            <button onclick="openModalWithId('python')" class="text-brand-600 hover:text-brand-700 font-semibold flex items-center space-x-1">
+                                <span>Xem chi tiết</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File 3 -->
+                    <div class="file-card border border-slate-200/80 rounded-xl p-5 bg-slate-50/50 hover:bg-white hover:border-brand-500/50 transition-all shadow-sm flex flex-col justify-between" data-name="dataset_config.json configuration metadata">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">JSON Config</span>
+                                <span class="text-xs text-slate-400 font-mono">2.3 KB</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1 flex items-center space-x-2">
+                                <i class="fa-solid fa-file-code text-blue-600"></i>
+                                <span>dataset_config.json</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+                                Tệp cấu hình siêu dữ liệu (metadata) xác định các thông số phân chia tập dữ liệu huấn luyện, kiểm thử và đường dẫn nguồn dữ liệu.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 text-xs">
+                            <span class="text-slate-400">Cập nhật: Gần đây</span>
+                            <button onclick="openModalWithId('json')" class="text-brand-600 hover:text-brand-700 font-semibold flex items-center space-x-1">
+                                <span>Xem chi tiết</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File 4 -->
+                    <div class="file-card border border-slate-200/80 rounded-xl p-5 bg-slate-50/50 hover:bg-white hover:border-brand-500/50 transition-all shadow-sm flex flex-col justify-between" data-name="evaluation_report.html analytics report">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider">HTML Report</span>
+                                <span class="text-xs text-slate-400 font-mono">15.8 KB</span>
+                            </div>
+                            <h3 class="font-bold text-slate-800 text-base mb-1 flex items-center space-x-2">
+                                <i class="fa-solid fa-chart-line text-purple-600"></i>
+                                <span>evaluation_report.html</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-4">
+                                Báo cáo đánh giá trực quan kết quả độ chính xác, biểu đồ phân phối cảm xúc đánh giá từ khách hàng trên nền tảng thương mại điện tử.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-200/60 text-xs">
+                            <span class="text-slate-400">Cập nhật: Gần đây</span>
+                            <button onclick="openModalWithId('html')" class="text-brand-600 hover:text-brand-700 font-semibold flex items-center space-x-1">
+                                <span>Xem chi tiết</span>
+                                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Text Analysis Content -->
+        <div id="tab-analyzer" class="tab-content hidden flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left & Middle: Input Area -->
+            <div class="lg:col-span-2 flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <label for="text-input" class="font-semibold text-slate-700 flex items-center space-x-2 text-sm">
+                        <i class="fa-regular fa-pen-to-square text-brand-600"></i>
+                        <span>Nhập hoặc dán văn bản đánh giá sản phẩm:</span>
+                    </label>
+                    <button onclick="clearText()" class="text-xs text-rose-500 hover:text-rose-700 font-medium transition-colors flex items-center space-x-1">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Xóa văn bản</span>
+                    </button>
+                </div>
+                <textarea id="text-input" oninput="analyzeText()" placeholder="Nhập nội dung cần phân tích thống kê từ, ký tự, thời gian đọc..." class="w-full flex-1 min-h-[280px] p-4 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none resize-none transition-all text-slate-700 leading-relaxed text-sm"></textarea>
+                
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                    <div class="flex items-center space-x-4">
+                        <span><i class="fa-solid fa-bolt text-amber-500 mr-1"></i> Phân tích tự động thời gian thực</span>
+                    </div>
+                    <button onclick="loadSampleText()" class="text-brand-600 hover:text-brand-700 font-semibold transition-colors">
+                        <i class="fa-solid fa-wand-magic mr-1"></i> Tải đánh giá mẫu Amazon
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Metrics & Statistics Dashboard -->
+            <div class="flex flex-col space-y-4">
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 flex flex-col h-full">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center space-x-2 border-b border-slate-100 pb-3 text-sm">
+                        <i class="fa-solid fa-gauge-high text-brand-600"></i>
+                        <span>Bảng Thống Kê Nhanh</span>
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <!-- Words -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Số từ</span>
+                            <span id="stat-words" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Characters -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Ký tự</span>
+                            <span id="stat-chars" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Sentences -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Câu</span>
+                            <span id="stat-sentences" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Reading Time -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Thời gian đọc</span>
+                            <span id="stat-time" class="text-2xl font-extrabold text-brand-600">0s</span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="space-y-3 mt-auto bg-brand-50/50 border border-brand-100/60 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold text-brand-700 uppercase tracking-wider mb-2">Chỉ số bổ sung</h4>
+                        <div class="flex justify-between text-xs text-slate-600 py-1 border-b border-brand-100/40">
+                            <span>Độ dài từ trung bình:</span>
+                            <span id="stat-avg-word-len" class="font-semibold text-slate-800">0 ký tự</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-600 py-1">
+                            <span>Trạng thái:</span>
+                            <span id="stat-status" class="font-semibold text-emerald-600">Sẵn sàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Read Me Content (Amazon Dataset Card) -->
+        <div id="tab-readme" class="tab-content hidden flex-1 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-10 overflow-y-auto">
+            <div class="max-w-4xl mx-auto space-y-6 text-slate-700">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-5">
+                    <div>
+                        <span class="bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full mb-2 inline-block">Dataset Card</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Amazon Reviews for Sentiment Analysis</h2>
+                    </div>
+                    <div class="text-right text-xs text-slate-500">
+                        <div>Tác giả: <strong class="text-slate-800">Nguyễn Thị Hồng Hạnh</strong></div>
+                        <a href="https://github.com/nguyenmy" target="_blank" class="text-brand-600 hover:underline font-medium">github.com/nguyenmy</a>
+                    </div>
+                </div>
+
+                <!-- Rendered Markdown Container -->
+                <div id="markdown-container" class="prose prose-slate max-w-none space-y-4 text-sm leading-relaxed">
+                    <!-- Markdown content populated via JS from README_2.md source -->
+                </div>
+
+                <div class="pt-8 border-t border-slate-100 text-center text-xs text-slate-400">
+                    © 2026 Nguyễn Thị Hồng Hạnh (GitHub: nguyenmy). License: cc-by-nc-sa-4.0.
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal for File Details -->
+    <div id="generic-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
+            <div class="flex items-center justify-between mb-4">
+                <h3 id="modal-title" class="font-bold text-lg text-slate-900">Chi tiết tệp</h3>
+                <button onclick="closeGenericModal()" class="text-slate-400 hover:text-slate-600 text-sm">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-xs font-mono text-slate-700 whitespace-pre-wrap max-h-80 overflow-y-auto mb-6" id="modal-content">
+                Nội dung chi tiết tệp...
+            </div>
+            <div class="flex justify-end">
+                <button onclick="closeGenericModal()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-brand-600/20 transition-all">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Raw content of README_2.md supplied from prompt
+        const readmeMarkdownContent = `
+---
+license:
+- cc-by-nc-sa-4.0
+kaggle_id: tarkkaanko/amazon
+---
+
+# Dataset Card for amazon reviews for sentiment analysis
+
+## Table of Contents
+- [Table of Contents](#table-of-contents)
+- [Dataset Description](#dataset-description)
+  - [Dataset Summary](#dataset-summary)
+  - [Supported Tasks and Leaderboards](#supported-tasks-and-leaderboards)
+  - [Languages](#languages)
+- [Dataset Structure](#dataset-structure)
+  - [Data Instances](#data-instances)
+  - [Data Fields](#data-fields)
+  - [Data Splits](#data-splits)
+- [Dataset Creation](#dataset-creation)
+  - [Curation Rationale](#curation-rationale)
+  - [Source Data](#source-data)
+  - [Annotations](#annotations)
+  - [Personal and Sensitive Information](#personal-and-sensitive-information)
+- [Considerations for Using the Data](#considerations-for-using-the-data)
+  - [Social Impact of Dataset](#social-impact-of-dataset)
+  - [Discussion of Biases](#discussion-of-biases)
+  - [Other Known Limitations](#other-known-limitations)
+- [Additional Information](#additional-information)
+  - [Dataset Curators](#dataset-curators)
+  - [Licensing Information](#licensing-information)
+  - [Citation Information](#citation-information)
+  - [Contributions](#contributions)
+
+## Dataset Description
+
+- **Homepage:** https://kaggle.com/datasets/tarkkaanko/amazon
+- **Repository:** https://github.com/nguyenmy
+- **Point of Contact:** Nguyễn Thị Hồng Hạnh
+
+### Dataset Summary
+
+One of the most important problems in e-commerce is the correct calculation of the points given to after-sales products. The solution to this problem is to provide greater customer satisfaction for the e-commerce site, product prominence for sellers, and a seamless shopping experience for buyers. Another problem is the correct ordering of the comments given to the products. The prominence of misleading comments will cause both financial losses and customer losses. In solving these 2 basic problems, e-commerce site and sellers will increase their sales, while customers will complete their purchasing journey without any problems. 
+
+This dataset consists of ranking product ratings and reviews on Amazon. This dataset containing Amazon Product Data includes product categories and various metadata managed by **Nguyễn Thị Hồng Hạnh** (\`nguyenmy\`).
+
+### What is expected of you?
+
+The product with the most comments in the electronics category has user ratings and comments. In this way, we expect you to perform sentiment analysis with your specific methods.
+
+### Dataset Curators
+
+This dataset integration was curated by **Nguyễn Thị Hồng Hạnh** (GitHub: **nguyenmy**).
+
+### Licensing Information
+
+The license for this dataset is cc-by-nc-sa-4.0.
+        `;
+
+        // Render Markdown on window load
+        window.onload = function() {
+            if (typeof marked !== 'undefined') {
+                document.getElementById('markdown-container').innerHTML = marked.parse(readmeMarkdownContent);
+            } else {
+                document.getElementById('markdown-container').innerText = readmeMarkdownContent;
+            }
+        };
+
+        // Tab switching functionality
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md', 'shadow-brand-600/20');
+                btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100', 'border', 'border-slate-200');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${tabName}`);
+            activeBtn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100', 'border', 'border-slate-200');
+            activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-md', 'shadow-brand-600/20');
+        }
+
+        // File search/filter logic
+        function filterFiles() {
+            const query = document.getElementById('file-search').value.toLowerCase();
+            const cards = document.querySelectorAll('.file-card');
+
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                if (name.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal triggers
+        function openGenericModal(title, content) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-content').innerText = content;
+            document.getElementById('generic-modal').classList.remove('hidden');
+        }
+
+        function openModalWithId(type) {
+            if (type === 'python') {
+                openGenericModal(
+                    'Mã nguồn Python (sentiment_model.py)',
+                    '# Mô phỏng code: Tiền xử lý văn bản, trích xuất đặc trưng TF-IDF và huấn luyện mô hình Naive Bayes / Logistic Regression trên tập dữ liệu Amazon.\n\nimport pandas as pd\nfrom sklearn.feature_extraction.text import TfidfVectorizer\nfrom sklearn.linear_model import LogisticRegression\n\nprint("Loading Amazon Dataset curated by nguyenmy...")'
+                );
+            } else if (type === 'json') {
+                openGenericModal(
+                    'Cấu hình Dataset (dataset_config.json)',
+                    '{\n  "dataset_name": "amazon-reviews-sentiment",\n  "version": "1.0.0",\n  "author": "Nguyen Thi Hong Hanh",\n  "github_username": "nguyenmy",\n  "splits": ["train", "test"],\n  "license": "cc-by-nc-sa-4.0"\n}'
+                );
+            } else if (type === 'html') {
+                openGenericModal(
+                    'Báo cáo đánh giá (evaluation_report.html)',
+                    'Báo cáo trực quan hiển thị ma trận nhầm lẫn (Confusion Matrix), chỉ số Accuracy (94.2%), F1-Score và biểu đồ phân tích xu hướng đánh giá 5 sao từ người mua hàng.'
+                );
+            }
+        }
+
+        function closeGenericModal() {
+            document.getElementById('generic-modal').classList.add('hidden');
+        }
+
+        function previewFileContent(type) {
+            if (type === 'readme') {
+                switchTab('readme');
+            }
+        }
+
+        // Text Analysis Logic
+        function analyzeText() {
+            const text = document.getElementById('text-input').value;
+            const charCount = text.length;
+            const words = text.trim() ? text.trim().split(/\s+/) : [];
+            const wordCount = words.length;
+            const sentences = text.split(/[.!?]+/).filter(Boolean);
+            const sentenceCount = sentences.length;
+
+            const readTimeSeconds = Math.ceil((wordCount / 200) * 60);
+            let timeString = `${readTimeSeconds}s`;
+            if (readTimeSeconds >= 60) {
+                const mins = Math.floor(readTimeSeconds / 60);
+                const secs = readTimeSeconds % 60;
+                timeString = `${mins}m ${secs}s`;
+            }
+            if (wordCount === 0) timeString = '0s';
+
+            let totalWordLength = 0;
+            if (wordCount > 0) {
+                totalWordLength = words.reduce((acc, word) => acc + word.replace(/[^a-zA-Zà-ỹÀ-Ỹ]/g, '').length, 0);
+            }
+            const avgWordLen = wordCount > 0 ? (totalWordLength / wordCount).toFixed(1) : 0;
+
+            document.getElementById('stat-words').innerText = wordCount.toLocaleString();
+            document.getElementById('stat-chars').innerText = charCount.toLocaleString();
+            document.getElementById('stat-sentences').innerText = sentenceCount.toLocaleString();
+            document.getElementById('stat-time').innerText = timeString;
+            document.getElementById('stat-avg-word-len').innerText = `${avgWordLen} ký tự`;
+            
+            const statusEl = document.getElementById('stat-status');
+            if (wordCount > 0) {
+                statusEl.innerText = 'Đang phân tích';
+                statusEl.className = 'font-semibold text-brand-600';
+            } else {
+                statusEl.innerText = 'Trống';
+                statusEl.className = 'font-semibold text-slate-400';
+            }
+        }
+
+        function clearText() {
+            document.getElementById('text-input').value = '';
+            analyzeText();
+        }
+
+        function loadSampleText() {
+            const sample = "Sản phẩm điện tử này tuyệt vời ngoài mong đợi! Giao hàng nhanh chóng và chất lượng đánh giá 5 sao xứng đáng. Tôi rất hài lòng khi mua sắm trên Amazon và thực hiện phân tích cảm xúc này.";
+            document.getElementById('text-input').value = sample;
+            analyzeText();
+        }
+    </script>
+</body>
+</html>

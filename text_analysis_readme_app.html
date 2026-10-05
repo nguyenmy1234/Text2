@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analysis & ReadMe Suite</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-gray-100 to-slate-200 h-full text-slate-800 flex flex-col font-sans antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-brand-600 to-emerald-400 p-2.5 rounded-xl text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Text Analyzer Pro</h1>
+                    <p class="text-xs text-slate-500">Workspace & Documentation Suite</p>
+                </div>
+            </div>
+            
+            <!-- Author Attribution Badge -->
+            <div class="flex items-center space-x-2 bg-slate-100 border border-slate-200/80 px-3 py-1.5 rounded-full shadow-inner">
+                <div class="w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs font-bold">
+                    H
+                </div>
+                <div class="text-xs">
+                    <span class="font-semibold text-slate-700">Nguyễn Thị Hồng Hạnh</span>
+                    <span class="text-slate-400 mx-1">|</span>
+                    <a href="https://github.com/nguyenmy" target="_blank" class="text-brand-600 hover:underline font-medium">
+                        <i class="fa-brands fa-github mr-0.5"></i> nguyenmy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-2 border-b border-slate-200 pb-3 mb-6">
+            <button onclick="switchTab('analyzer')" id="btn-analyzer" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 bg-brand-600 text-white shadow-md shadow-brand-600/20">
+                <i class="fa-solid fa-chart-pie"></i>
+                <span>Text Analysis</span>
+            </button>
+            <button onclick="switchTab('readme')" id="btn-readme" class="tab-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 flex items-center space-x-2 bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 shadow-sm">
+                <i class="fa-solid fa-book-open"></i>
+                <span>Read Me</span>
+            </button>
+        </div>
+
+        <!-- Tab 1: Text Analysis Content -->
+        <div id="tab-analyzer" class="tab-content flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left & Middle: Input Area -->
+            <div class="lg:col-span-2 flex flex-col bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6">
+                <div class="flex items-center justify-between mb-3">
+                    <label for="text-input" class="font-semibold text-slate-700 flex items-center space-x-2">
+                        <i class="fa-regular fa-pen-to-square text-brand-600"></i>
+                        <span>Nhập hoặc dán văn bản của bạn vào đây:</span>
+                    </label>
+                    <button onclick="clearText()" class="text-xs text-rose-500 hover:text-rose-700 font-medium transition-colors flex items-center space-x-1">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Xóa văn bản</span>
+                    </button>
+                </div>
+                <textarea id="text-input" oninput="analyzeText()" placeholder="Bắt đầu gõ hoặc dán nội dung tại đây để phân tích thống kê từ, ký tự, độ đọc hiểu..." class="w-full flex-1 min-h-[280px] p-4 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none resize-none transition-all text-slate-700 leading-relaxed"></textarea>
+                
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 pt-3 border-t border-slate-100">
+                    <div class="flex items-center space-x-4">
+                        <span><i class="fa-solid fa-bolt text-amber-500 mr-1"></i> Phân tích tự động thời gian thực</span>
+                    </div>
+                    <button onclick="loadSampleText()" class="text-brand-600 hover:text-brand-700 font-semibold transition-colors">
+                        <i class="fa-solid fa-wand-magic mr-1"></i> Tải văn bản mẫu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Metrics & Statistics Dashboard -->
+            <div class="flex flex-col space-y-4">
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 flex flex-col h-full">
+                    <h3 class="font-bold text-slate-800 mb-4 flex items-center space-x-2 border-b border-slate-100 pb-3">
+                        <i class="fa-solid fa-gauge-high text-brand-600"></i>
+                        <span>Bảng Thống Kê Nhanh</span>
+                    </h3>
+
+                    <div class="grid grid-cols-2 gap-3 mb-6">
+                        <!-- Words -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Số từ</span>
+                            <span id="stat-words" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Characters -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Ký tự</span>
+                            <span id="stat-chars" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Sentences -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Câu</span>
+                            <span id="stat-sentences" class="text-2xl font-extrabold text-slate-800">0</span>
+                        </div>
+                        <!-- Reading Time -->
+                        <div class="bg-slate-50 border border-slate-100 p-4 rounded-xl">
+                            <span class="block text-xs font-medium text-slate-400 uppercase tracking-wider mb-1">Thời gian đọc</span>
+                            <span id="stat-time" class="text-2xl font-extrabold text-brand-600">0s</span>
+                        </div>
+                    </div>
+
+                    <!-- Additional Details -->
+                    <div class="space-y-3 mt-auto bg-brand-50/50 border border-brand-100/60 p-4 rounded-xl">
+                        <h4 class="text-xs font-bold text-brand-700 uppercase tracking-wider mb-2">Chỉ số bổ sung</h4>
+                        <div class="flex justify-between text-xs text-slate-600 py-1 border-b border-brand-100/40">
+                            <span>Độ dài từ trung bình:</span>
+                            <span id="stat-avg-word-len" class="font-semibold text-slate-800">0 ký tự</span>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-600 py-1">
+                            <span>Trạng thái:</span>
+                            <span id="stat-status" class="font-semibold text-emerald-600">Sẵn sàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Read Me Content -->
+        <div id="tab-readme" class="tab-content hidden flex-1 bg-white rounded-2xl border border-slate-200/80 shadow-sm p-6 sm:p-8 overflow-y-auto">
+            <div class="max-w-3xl mx-auto space-y-6 text-slate-700">
+                <div class="border-b border-slate-100 pb-5">
+                    <div class="inline-block bg-brand-100 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">Tài liệu hướng dẫn</div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Giới thiệu về Text Analyzer & ReadMe Suite</h2>
+                    <p class="text-sm text-slate-500 mt-1">Phiên bản 1.0.0 — Được phát triển với giao diện hiện đại, tối ưu trải nghiệm người dùng.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-info text-brand-600"></i>
+                        <span>1. Về tác giả dự án</span>
+                    </h3>
+                    <p class="leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        Ứng dụng này được thiết kế và xây dựng theo yêu cầu của <strong class="text-slate-900">Nguyễn Thị Hồng Hạnh</strong>. Mọi mã nguồn và cấu hình được quản lý trên GitHub tại tài khoản cá nhân: 
+                        <a href="https://github.com/nguyenmy" target="_blank" class="text-brand-600 font-semibold hover:underline inline-flex items-center space-x-1 ml-1">
+                            <i class="fa-brands fa-github"></i>
+                            <span>nguyenmy</span>
+                        </a>.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-brand-600"></i>
+                        <span>2. Các tính năng chính</span>
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-600 pl-2">
+                        <li><strong>Phân tích văn bản thời gian thực:</strong> Tự động tính toán số lượng từ, ký tự, số câu ngay khi bạn nhập liệu.</li>
+                        <li><strong>Thống kê thông minh:</strong> Đo lường thời gian đọc trung bình dựa trên tốc độ đọc của con người và tính độ dài từ trung bình.</li>
+                        <li><strong>Hệ thống Tab linh hoạt:</strong> Chuyển đổi mượt mà giữa không gian làm việc (Text Analysis) và trang tài liệu thông tin dự án (Read Me).</li>
+                        <li><strong>Giao diện Responsive:</strong> Thiết kế chuẩn phong cách hiện đại với Tailwind CSS, tương thích tốt trên mọi thiết bị máy tính và điện thoại.</li>
+                    </ul>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center space-x-2">
+                        <i class="fa-solid fa-code text-brand-600"></i>
+                        <span>3. Công nghệ sử dụng</span>
+                    </h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
+                            <i class="fa-brands fa-html5 text-orange-500 text-xl mb-1"></i>
+                            <div class="text-xs font-semibold text-slate-700">HTML5 Semantic</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
+                            <i class="fa-brands fa-css3-alt text-blue-500 text-xl mb-1"></i>
+                            <div class="text-xs font-semibold text-slate-700">Tailwind CSS</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
+                            <i class="fa-brands fa-js text-yellow-500 text-xl mb-1"></i>
+                            <div class="text-xs font-semibold text-slate-700">Vanilla JavaScript</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 text-center text-xs text-slate-400">
+                    © 2026 Nguyễn Thị Hồng Hạnh (GitHub: nguyenmy). All rights reserved.
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            tabs.forEach(tab => tab.classList.add('hidden'));
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md', 'shadow-brand-600/20');
+                btn.classList.add('bg-white', 'text-slate-600', 'hover:bg-slate-100', 'border', 'border-slate-200');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`btn-${tabName}`);
+            activeBtn.classList.remove('bg-white', 'text-slate-600', 'hover:bg-slate-100', 'border', 'border-slate-200');
+            activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-md', 'shadow-brand-600/20');
+        }
+
+        // Text Analysis Logic
+        function analyzeText() {
+            const text = document.getElementById('text-input').value;
+            
+            // Characters count
+            const charCount = text.length;
+
+            // Words count
+            const words = text.trim() ? text.trim().split(/\s+/) : [];
+            const wordCount = words.length;
+
+            // Sentences count (split by punctuation: ., !, ?)
+            const sentences = text.split(/[.!?]+/).filter(Boolean);
+            const sentenceCount = sentences.length;
+
+            // Reading time estimation (approx 200 words per minute)
+            const readTimeSeconds = Math.ceil((wordCount / 200) * 60);
+            let timeString = `${readTimeSeconds}s`;
+            if (readTimeSeconds >= 60) {
+                const mins = Math.floor(readTimeSeconds / 60);
+                const secs = readTimeSeconds % 60;
+                timeString = `${mins}m ${secs}s`;
+            }
+            if (wordCount === 0) timeString = '0s';
+
+            // Average word length
+            let totalWordLength = 0;
+            if (wordCount > 0) {
+                totalWordLength = words.reduce((acc, word) => acc + word.replace(/[^a-zA-Zà-ỹÀ-Ỹ]/g, '').length, 0);
+            }
+            const avgWordLen = wordCount > 0 ? (totalWordLength / wordCount).toFixed(1) : 0;
+
+            // Update DOM elements
+            document.getElementById('stat-words').innerText = wordCount.toLocaleString();
+            document.getElementById('stat-chars').innerText = charCount.toLocaleString();
+            document.getElementById('stat-sentences').innerText = sentenceCount.toLocaleString();
+            document.getElementById('stat-time').innerText = timeString;
+            document.getElementById('stat-avg-word-len').innerText = `${avgWordLen} ký tự`;
+            
+            const statusEl = document.getElementById('stat-status');
+            if (wordCount > 0) {
+                statusEl.innerText = 'Đang phân tích';
+                statusEl.className = 'font-semibold text-brand-600';
+            } else {
+                statusEl.innerText = 'Trống';
+                statusEl.className = 'font-semibold text-slate-400';
+            }
+        }
+
+        function clearText() {
+            document.getElementById('text-input').value = '';
+            analyzeText();
+        }
+
+        function loadSampleText() {
+            const sample = "Chào mừng bạn đến với ứng dụng Text Analyzer Pro! Ứng dụng này được tạo ra theo yêu cầu của Nguyễn Thị Hồng Hạnh (GitHub: nguyenmy). Bạn có thể sử dụng công cụ này để thống kê nhanh chóng số lượng từ, ký tự, câu và ước tính thời gian đọc văn bản một cách cực kỳ tiện lợi và chính xác.";
+            document.getElementById('text-input').value = sample;
+            analyzeText();
+        }
+    </script>
+</body>
+</html>
