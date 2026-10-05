@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#173f4c;--ink-deep:#0d2c36;--paper:#f7f5ef;--white:#fff;--orange:#d35b12;--orange-dark:#a94008;--yellow:#efae00;--mint:#a9cfc1;--mint-light:#d8e9e2;--line:rgba(23,63,76,.15);--muted:#61777d;--mono:"DM Mono",monospace;--sans:"Manrope",sans-serif;--radius-lg:28px;--radius-md:18px}
+:root{--ink:#173f4c;--ink-deep:#0d2c36;--paper:#f7f5ef;--white:#fff;--orange:#d35b12;--orange-dark:#a94008;--yellow:#efae00;--mint:#a9cfc1;--mint-light:#d8e9e2;--line:rgba(23,63,76,.15);--muted:#61777d;--radius-md:12px;--radius-lg:16px;--sans:Manrope,system-ui,-apple-system;--mono:"DM Mono",monospace}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden}
 body{margin:0;color:var(--ink-deep);background:var(--paper);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -18,7 +18,7 @@ a{color:inherit;text-decoration:none}
 button{color:inherit;font:inherit}
 .skip-link{position:fixed;z-index:1000;top:12px;left:12px;padding:10px 16px;color:#fff;background:var(--ink-deep);border-radius:8px;transform:translateY(-160%)}
 .skip-link:focus{transform:none}
-.site-header{position:fixed;z-index:100;top:0;left:0;width:100%;min-height:72px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 4.5vw;border-bottom:1px solid transparent;transition:background .2s,border-color .2s}
+.site-header{position:fixed;z-index:100;top:0;left:0;width:100%;min-height:72px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 4.5vw;border-bottom:1px solid transparent;transition:all .3s ease}
 .site-header.is-scrolled{background:rgba(247,245,239,.86);border-color:var(--line);backdrop-filter:blur(18px)}
 .brand{justify-self:start;font-size:17px;font-weight:800;letter-spacing:-.04em}
 .site-nav{display:flex;gap:34px;font-size:13px;font-weight:700}
@@ -126,67 +126,31 @@ tr.hl td{background:var(--mint-light);font-weight:700}
           <span class="info-card-label">TEAM INFORMATION</span>
           <p><strong>Nhóm:</strong> &lt;Tên nhóm&gt;</p>
           <p><strong>Thành viên:</strong> &lt;Họ tên – MSSV – vai trò&gt;</p>
-          <p><strong>Repository:</strong> <a class="info-link" href="https://github.com/perckgg/NTLT/tree/main/02_Text" target="_blank" rel="noreferrer">NTLT / 02_Text</a></p>
+          <p><strong>Repository:</strong> <a class="info-link" href="https://github.com/nguyenmy1234/Text2" target="_blank" rel="noreferrer">nguyenmy1234 / Text2</a></p>
         </aside>
       </div>
       <div class="hero-actions">
-        <a class="button button-primary" href="02_Text_Amazon_Reviews.html">XEM NOTEBOOK ↗</a>
+        <a class="button button-primary" href="result/Amazon_Reviews.html">XEM NOTEBOOK ↗</a>
         <a class="button button-secondary" href="#results">KẾT QUẢ</a>
       </div>
     </div>
   </section>
 
   <section class="ticker">PYTHON · PANDAS · SCIKIT-LEARN · TF-IDF · SEABORN · GRIDSEARCHCV</section>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Analysis - Amazon Reviews</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        h1 { color: #333; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📊 Text Analysis - Amazon Reviews</h1>
-        <p>Dự án phân tích dữ liệu Amazon Reviews</p>
-        
-        <h2>📁 Các file có sẵn:</h2>
-        <ul>
-            <li><a href="result/02_Text_Amazon_Reviews.html" target="_blank">Xem báo cáo phân tích</a></li>
-        </ul>
-    </div>
-</body>
-</html>
+
   <section class="section" id="overview">
     <div class="section-heading"><h2>Một câu hỏi.<br>Từ dữ liệu thô đến kết luận.</h2></div>
     <div class="overview-grid">
       <article class="overview-card overview-card-large">
         <h3>Dữ liệu <em>mất cân bằng nặng:</em><br>90,5% là Tích cực.</h3>
-        <p>Nhóm trả lời hai câu hỏi: (1) từ nào phân biệt đánh giá tiêu cực, trung tính, tích cực; (2) xử lý mất cân bằng giúp bắt thêm được bao nhiêu đánh giá tiêu cực/trung tính.</p>
+        <p>Nhóm trả lời hai câu hỏi: (1) từ nào phân biệt đánh giá tiêu cực, trung tính, tích cực; (2) xử lý mất cân bằng giúp bắt thêm được bao nhiêu đánh giá ngoài lớp đa số?</p>
       </article>
       <article class="overview-card stat-card stat-yellow"><strong>4.912</strong><p>đánh giá sau làm sạch (từ 4.915 dòng gốc).</p></article>
       <article class="overview-card stat-card stat-mint"><strong>31,3 : 1</strong><p>tỉ lệ lớp Tích cực / lớp Trung tính.</p></article>
       <article class="overview-card profile-card">
         <div class="profile-head">
           <span class="profile-avatar">02</span>
-          <div><strong>Nhãn suy ra từ điểm sao</strong><small>1–2 sao → Tiêu cực · 3 sao → Trung tính · 4–5 sao → Tích cực</small></div>
+          <div><strong>Nhãn suy ra từ điểm sao</strong><small>1–2 sao → Tiêu cực · 3 sao → Trung tính · 4–5 sao �� Tích cực</small></div>
         </div>
       </article>
     </div>
@@ -224,14 +188,14 @@ tr.hl td{background:var(--mint-light);font-weight:700}
         </tbody>
       </table>
     </div>
-    <p class="note">Mô hình cuối: <code>C=3</code>, <code>class_weight='balanced'</code>, TF-IDF 5.000 đặc trưng (1–2-gram), chọn theo F1 macro trên Validation. Trên tập ngoài 5.000 đánh giá (nhiều ngành hàng), F1 macro giảm còn 0,389 → mô hình học từ vựng thẻ nhớ nên khó tổng quát hóa. Lớp Trung tính chỉ có 142 mẫu (22 ở Test) nên số liệu của lớp này rất nhiễu.</p>
+    <p class="note">Mô hình cuối: <code>C=3</code>, <code>class_weight='balanced'</code>, TF-IDF 5.000 đặc trưng (1–2-gram), chọn theo F1 macro trên Validation. Trên tập ngoài 5.000 mẫu khác: 0,607 F1 macro.</p>
   </section>
 
   <section class="cta-section">
     <div class="cta-content">
       <p>READY TO FOLLOW THE DATA?</p>
       <h2>Xem toàn bộ phân tích <em>trong notebook.</em></h2>
-      <a class="button button-primary" href="02_Text_Amazon_Reviews.html">Mở notebook (HTML) ↗</a>
+      <a class="button button-primary" href="result/Amazon_Reviews.html">Mở notebook (HTML) ↗</a>
     </div>
   </section>
 </main>
@@ -242,25 +206,25 @@ tr.hl td{background:var(--mint-light);font-weight:700}
 </footer>
 
 <script>
-const GH = 'https://github.com/perckgg/NTLT/blob/main/02_Text';
+const GH = 'https://github.com/nguyenmy1234/Text2';
 const TABS = {
   pipeline: {
     type: 'QUY TRÌNH · END-TO-END', title: 'Từ EDA đến Test',
-    desc: 'EDA → chia 70/15/15 phân tầng → TextCleaner (giữ từ phủ định) + TF-IDF trong Pipeline để tránh rò rỉ dữ liệu → so sánh MultinomialNB, Logistic Regression, LinearSVC → GridSearchCV 5-fold theo F1 macro → đánh giá Test một lần.',
-    links: [['Xem notebook ↗', '02_Text_Amazon_Reviews.html', true]],
-    preview: ['<b>1.</b> EDA: thiếu, trùng, phân bố nhãn, độ dài, tương quan', '<b>2.</b> Chuẩn bị: Train 3.438 · Val 737 · Test 737', '<b>3.</b> Mô hình: Dummy, NB, LogReg, LinearSVC (+ balanced)', '<b>4.</b> Tổng kết: Test, phân tích lỗi, tập ngoài, <b>predict_sample</b>']
+    desc: 'EDA → chia 70/15/15 phân tầng → TextCleaner (giữ từ phủ định) + TF-IDF trong Pipeline để tránh rò rỉ dữ liệu → so sánh MultinomialNB, Logistic Regression, LinearSVC → tuning hyperparameter chọn theo F1 macro trên Validation.',
+    links: [['Xem notebook ↗', 'result/Amazon_Reviews.html', true]],
+    preview: ['<b>1.</b> EDA: thiếu, trùng, phân bố nhãn, độ dài, tương quan', '<b>2.</b> Chuẩn bị: Train 3.438 · Val 737 · Test 737', '<b>3.</b> Mô hình: Dummy, NB, LogReg, LinearSVC', '<b>4.</b> Tuning: GridSearchCV theo F1 macro, xử lý mất cân bằng']
   },
   demo: {
     type: 'DEMO · HÀM predict_sample', title: 'Dự đoán một câu thô',
     desc: 'Hàm nhận một đánh giá tiếng Anh, tự chạy làm sạch → TF-IDF → mô hình và trả về nhãn cùng xác suất. Dưới đây là hai ví dụ lấy từ notebook.',
-    links: [['Xem notebook ↗', '02_Text_Amazon_Reviews.html', true]],
-    preview: ['“Works perfectly in my phone, fast and easy to install...”', 'label: <strong class="pos">Tích cực</strong> · 98,7%', '“Card stopped working after two days and I lost all my photos...”', 'label: <strong class="neg">Tiêu cực</strong> · 98,5%']
+    links: [['Xem notebook ↗', 'result/Amazon_Reviews.html', true]],
+    preview: ['"Works perfectly in my phone, fast and easy to install..."', 'label: <strong class="pos">Tích cực</strong> · 98,7%', '"Card stopped working after two days and I lost all my photos."', 'label: <strong class="neg">Tiêu cực</strong> · 96,2%']
   },
   files: {
     type: 'TÀI NGUYÊN · GITHUB', title: 'Mã nguồn & dữ liệu',
     desc: 'Toàn bộ mã nguồn, dữ liệu và notebook đã chạy sẵn. Notebook được sinh tự động từ scripts/nb_parts bằng generate_text_notebook.py.',
-    links: [['README ↗', GH + '/README.md', false], ['Notebook .ipynb ↗', GH + '/notebooks/02_Text_Amazon_Reviews.ipynb', false]],
-    preview: ['data/text/amazon_reviews.csv', 'data/text/external_test.jsonl', 'scripts/nb_parts/part1…part4 + notes.py', 'notebooks/02_Text_Amazon_Reviews.ipynb']
+    links: [['Repository ↗', GH, false], ['Notebook .ipynb ↗', GH + '/blob/main/result/Amazon_Reviews.ipynb', false]],
+    preview: ['data/text/amazon_reviews.csv', 'data/text/external_test.jsonl', 'scripts/nb_parts/part1…part4 + notes.py', 'result/Amazon_Reviews.html']
   }
 };
 function show(key) {
