@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amazon Review Sentiment | HCMUT Data Analytics Project</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 0; background: #f7f5ef; color: #173f4c; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 20px 60px; }
+  h1 { font-size: 2.4rem; margin-bottom: 10px; }
+  .subtitle { color: #61777d; font-size: 1.05rem; }
+  .card { background: #fff; border: 1px solid #d9d9d9; border-radius: 16px; padding: 24px; box-shadow: 0 8px 18px rgba(0,0,0,0.04); margin-top: 28px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .metric { background: #f3f0e8; border-radius: 12px; padding: 18px; }
+  .metric strong { display: block; font-size: 2rem; }
+  .button { display: inline-block; margin-top: 18px; padding: 12px 18px; background: #d35b12; color: #fff; border-radius: 10px; text-decoration: none; font-weight: 700; }
+  .button.secondary { background: transparent; border: 1px solid #173f4c; color: #173f4c; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+  th { background: #173f4c; color: #fff; }
+  .note { color: #61777d; font-size: 0.96rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>BÀI 2 · DỮ LIỆU VĂN BẢN (TEXT)</h1>
+    <div class="subtitle">Phân loại cảm xúc đánh giá sản phẩm Amazon · TF-IDF + Logistic Regression</div>
+
+    <div class="card">
+      <div class="grid">
+        <div class="metric"><strong>4.912</strong> đánh giá sau làm sạch</div>
+        <div class="metric"><strong>90.5%</strong> là Tích cực</div>
+        <div class="metric"><strong>0.593</strong> F1 macro trên Test</div>
+      </div>
+      <a class="button" href="../result/Amazon_Reviews.html">Xem notebook</a>
+      <a class="button secondary" href="https://github.com/nguyenmy1234/Text2" target="_blank" rel="noreferrer">GitHub repo</a>
+    </div>
+
+    <div class="card">
+      <h2>Kết quả trên tập Test</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Mô hình</th>
+            <th>Accuracy</th>
+            <th>F1 macro</th>
+            <th>ROC-AUC</th>
+            <th>Bắt Tiêu cực</th>
+            <th>Bắt Trung tính</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Dummy (lớp đa số)</td><td>0.905</td><td>0.317</td><td>0.500</td><td>0/48</td><td>0/22</td></tr>
+          <tr><td>LogReg mặc định</td><td>0.923</td><td>0.458</td><td>0.907</td><td>13/48</td><td>0/22</td></tr>
+          <tr><td>LogReg tuned</td><td>0.919</td><td>0.593</td><td>0.884</td><td>37/48</td><td>3/22</td></tr>
+        </tbody>
+      </table>
+      <p class="note">Mô hình cuối: Logistic Regression với C=3 và class_weight='balanced', chọn theo F1 macro trên Validation.</p>
+    </div>
+  </div>
+</body>
+</html>
